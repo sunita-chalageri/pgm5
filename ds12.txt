@@ -1,6 +1,7 @@
 #include<stdio.h>
 #define MAX_ADDR 5
 #include<math.h>
+#include<stdlib.h>
 struct employee
 {
 int emp_id, emp_age;
