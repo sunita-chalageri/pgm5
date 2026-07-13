@@ -1,0 +1,77 @@
+#include<stdio.h>
+#define MAX_ADDR 5
+#include<math.h>
+struct employee
+{
+int emp_id, emp_age;
+char emp_name[25];
+}emp[MAX_ADDR];
+
+int hash (int key)
+{
+return key % MAX_ADDR;
+}
+void main()
+{
+    int i, ch, count = 0, index, haddr, id, flag = 0;
+    do
+    {
+        printf("Enter 1 to insert record \n 2. to search record\n3.Quit\n");
+        scanf("%d", &ch);
+        switch(ch)
+        {
+            case 1: if(count == MAX_ADDR)
+                    {
+                        printf("No free addres space\n");
+                        break;
+                    }
+                    printf("Enter employee id\n");
+                    scanf("%d", &id);
+                    haddr = hash(id);
+                    printf("Home address is %d\n", haddr);
+                    for(i=0; i<MAX_ADDR; i++)
+                    {
+                        index = (haddr+i)%MAX_ADDR;
+                        if(emp[index].emp_id == 0)
+                        {
+                            emp[index].emp_id = id;
+                            printf("Enter the employee name\n");
+                            scanf("%s", emp[index].emp_name);
+                            printf("Enter the employee age\n");
+                            scanf("%d", &emp[index].emp_age);
+                            count++;
+                            printf("Successfuly inserted at Actual Address %d:\n\n", index);
+                            break;
+                        }
+                    }
+            break;
+            case 2: printf("Enter employee id to be searched\n");
+                    scanf("%d",&id);
+                    haddr = hash(id);
+                    for(i=0; i<MAX_ADDR; i++)
+                    {
+                        index = (haddr+i)%MAX_ADDR;
+                        if(emp[index].emp_id == 0)
+                        {
+                            flag = 1;
+                            break;
+                        }
+                        else if(emp[index].emp_id == id)
+                        {
+                            printf("Employee id is%d\n",emp[index].emp_id);
+                            printf("Employee name is %s\n",emp[index].emp_name);
+                            printf("Employee age is %d\n",emp[index].emp_age);
+                            printf("Search Length is: %d\n", ++i);
+                            break;
+                        }
+                    }
+                    if(flag == 1 || i == MAX_ADDR)
+                    {
+                        printf("Key not present\n");
+                    }
+            break;
+        default:ch=3;break;
+        }
+    }while(ch!=3);
+}
+
